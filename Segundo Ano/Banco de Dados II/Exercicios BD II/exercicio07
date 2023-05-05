@@ -1,0 +1,60 @@
+/*Considere as tabelas "Clientes", "Vendas" e "Produtos". 
+A tabela "Clientes" possui os seguintes atributos: id, nome e idade. 
+A tabela "Vendas" possui os seguintes atributos: id, id_cliente, id_produto e quantidade. 
+A tabela "Produtos" possui os seguintes atributos: id, nome e preco. */
+
+CREATE TABLE clientes(
+	id_clientes SERIAL PRIMARY KEY,
+	nome_cliente VARCHAR(100) NOT NULL,
+	idade_cliente INT NOT NULL
+);
+
+CREATE TABLE produtos(
+	id_produtos SERIAL PRIMARY KEY,
+	nome_produto VARCHAR(100) NOT NULL,
+	preco_produto DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE vendas(
+	id_vendas SERIAL PRIMARY KEY,
+	id_cliente INTEGER REFERENCES clientes(id_clientes),
+	id_produto INTEGER REFERENCES produtos(id_produtos),
+	quantidade_vendas INT NOT NULL
+);
+
+INSERT INTO clientes(nome_cliente, idade_cliente)
+VALUES ('João', 24),
+	   ('Aderson', 18),
+	   ('Back', 21),
+	   ('Luis', 23),
+	   ('Cauê', 18);
+	   
+INSERT INTO produtos(nome_produto, preco_produto)
+VALUES ('Coca', 10.00),
+	   ('Pepsi', 50.00),
+	   ('Guarana', 25.00),
+	   ('X-Tudo', 100.00),
+	   ('Salada', 25.00),
+	   ('alimento', 25.00);
+
+INSERT INTO vendas(id_cliente, id_produto, quantidade_vendas)
+VALUES (1, 6, 35),
+	   (3, 4, 25),
+	   (5, 5, 105),
+	   (4, 3, 85),
+	   (2, 6, 100);
+	   
+SELECT c.nome_cliente, c.idade_cliente
+FROM clientes c
+JOIN vendas v ON v.id_cliente = c.id_clientes
+JOIN produtos p ON p.id_produtos = v.id_produto
+WHERE p.nome_produto LIKE '%alimento%' AND v.quantidade_vendas > 10
+ORDER BY c.nome_cliente;
+
+
+/* Qual comando SQL exibirá o nome e idade dos clientes que realizaram vendas de mais de 10 unidades
+de produtos que contêm a palavra "alimento" no nome, ordenados pelo nome do cliente?
+*/
+
+
+

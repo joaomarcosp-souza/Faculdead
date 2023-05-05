@@ -1,0 +1,42 @@
+/*Considere as tabelas abaixo:
+Jogos(id_jogo, nome, categoria, plataforma, desenvolvedora)
+Vendas(id_venda, id_jogo, data_venda, valor)
+Escreva uma consulta SQL que retorne a quantidade de jogos vendidos por categoria, ordenados em ordem decrescente de quantidade.
+*/
+
+CREATE TABLE jogos(
+	id_jogos SERIAL PRIMARY KEY,
+	nome_jogo VARCHAR(100) NOT NULL,
+	categoria_jogo VARCHAR(100) NOT NULL,
+	plataforma VARCHAR(50) NOT NULL,
+	desenvolvedora VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE vendas(
+	id_venda SERIAL PRIMARY KEY,
+	id_jogo INTEGER REFERENCES jogos(id_jogos),
+	data_venda DATE NOT NULL,
+	valor DECIMAL(5,2) NOT NULL
+);
+
+INSERT INTO jogos(nome_jogo, categoria_jogo, plataforma, desenvolvedora)
+VALUES ('Cyberpunk', 'RPG de ação', 'PC', 'CD Projekt'),
+	   ('Red Dead Redemption', 'Open World', 'PC', 'Rockstar Games'),
+	   ('Wartales', 'Open World RPG', 'PC', 'Shiro Games'),
+	   ('Monster Hunter: World', 'RPG de ação', 'PC', 'Capcom'),
+	   ('God of War(2018)', 'RPG de ação', 'PC', 'Santa Monica Studio');
+
+INSERT INTO vendas(id_jogo, data_venda, valor)
+VALUES (1,'2023-02-15', 250.00),
+	   (2,'2023-03-01', 350.00),
+	   (3,'2023-04-06', 200.00),
+	   (4,'2023-01-10', 199.00),
+	   (5,'2023-02-02', 300.00);
+
+SELECT j.categoria_jogo, COUNT(j.categoria_jogo) AS qtde_categoria_vendidas
+FROM jogos j
+INNER JOIN vendas v ON j.id_jogos = v.id_jogo
+GROUP BY j.categoria_jogo
+ORDER BY qtde_categoria_vendidas DESC;
+
+	   

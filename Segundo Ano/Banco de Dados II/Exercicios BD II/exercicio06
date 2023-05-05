@@ -1,0 +1,45 @@
+CREATE TABLE time(
+	id_time SERIAL PRIMARY KEY,
+	nome_time VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE jogador (
+	id_jogador SERIAL PRIMARY KEY,
+	nome_jogador VARCHAR(100) NOT NULL,
+	idade_jogador INT NOT NULL,
+	time_id INTEGER REFERENCES time(id_time)
+);
+
+INSERT INTO time (nome_time) 
+VALUES ('Corinthias'),
+       ('Real Madri'),
+	   ('Paris Saint-Germain'),
+	   ('Chicago Bulls'),
+	   ('Santos'),
+	   ('Los Angeles Lakers'),
+       ('Palmeira'),
+       ('Barcelona');
+
+INSERT INTO jogador (nome_jogador, idade_jogador, time_id) 
+VALUES ('João', 24, 4),
+       ('Backringa', 23, 5),
+	   ('Luiz', 22, 6),
+	   ('Cauê', 18, 7),
+	   ('Ana', 35, 2),
+	   ('Rafael', 20, 1),
+	   ('Alberto', 18, 3),
+	   ('Aderson', 29, 8),
+	   ('Lucas', 38, 8),
+	   ('Lais', 22, 8),
+	   ('Lancelot', 36, 8);
+
+/*Dado o esquema abaixo, escreva uma consulta que retorne a média de idade dos jogadores de futebol que jogam no time 'Barcelona' e cujos nomes começam com a letra 'L':
+Jogador (id, nome, idade, time_id)
+Time (id, nome)*/
+
+SELECT AVG(j.idade_jogador) AS media_idade
+FROM jogador j
+JOIN time t ON t.id_time = j.time_id
+WHERE t.nome_time LIKE '%Barcelona%' AND j.nome_jogador LIKE 'L%';
+
+
