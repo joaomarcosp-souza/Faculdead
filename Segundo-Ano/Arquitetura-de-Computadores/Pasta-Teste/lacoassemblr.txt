@@ -18,5 +18,12 @@ laco:
 	jump_cond r4, fim
 	add r2, r2, r3
 	jump laco
+
+laco2:
+	add r2, r2, r3
+	add r0, r0, r3
+	cmp_less r4, r0, r1
+	jump_cond laco2
+
 fim:
 
