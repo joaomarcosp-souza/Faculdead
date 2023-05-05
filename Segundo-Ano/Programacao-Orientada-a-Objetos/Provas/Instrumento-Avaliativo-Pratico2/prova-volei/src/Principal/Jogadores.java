@@ -11,23 +11,5 @@ public class Jogadores {
 
     //Metodo para imprimir os atributos do jogador
     public void imprimirJogador(){}
-
-    // GETS e SETS
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
-    };
-
     
 }

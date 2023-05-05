@@ -10,7 +10,9 @@ public final class Levantador extends Jogadores{
     }
 
     public void imprimirJogador() {
-        System.out.printf("Nome: %s \n Idade: %i \n Altura: %.2f", nome, idade, experiencia);
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+        System.out.println("Altura: " + experiencia);
     }
 
     // Metodo GET
@@ -22,5 +24,22 @@ public final class Levantador extends Jogadores{
     public void setExperiencia(int experiencia){
         this.experiencia = experiencia;
     }
+
+    // GETS e SETS da super classe
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    };
 
 }

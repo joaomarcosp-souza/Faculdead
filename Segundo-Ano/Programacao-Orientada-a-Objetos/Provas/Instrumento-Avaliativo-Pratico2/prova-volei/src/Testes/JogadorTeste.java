@@ -55,8 +55,9 @@ public class JogadorTeste {
                 }
             } else if (opc == 2) {
                 for (int i = 0; i < cont_jogador; i++) {
-                    System.out.println("Jogadores: " + i+1);
+                    System.out.println("Jogador: " + i+1);
                     jogadores[i].imprimirJogador();
+                    System.out.println("\n");
                 }
             } else if (opc == 3) {
                 System.out.println("Saindo...");

@@ -10,7 +10,9 @@ public final class Ponteiro extends Jogadores{
 
     // 
     public void imprimirJogador(){
-        System.out.printf("Nome: %s \n Idade: %i \n Altura: %.2f", nome, idade, altura);
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+        System.out.println("Altura: " + altura);
     }
 
     // GETS e SETS
@@ -21,6 +23,21 @@ public final class Ponteiro extends Jogadores{
     public void setAltura(double altura) {
         this.altura = altura;
     }
-    
-    
+
+    // GETS e SETS da super classe
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    };
 }
