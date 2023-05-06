@@ -16,7 +16,7 @@ public class JogadorTeste {
         int cont_jogador = 0, opc = 0;
 
         while (opc != 3) {
-            System.out.println("1 - Cadastrar novo Jogador \n2 - Listar Jogadores \n3 - Sair");
+            System.out.println("1 - Cadastrar Jogador \n2 - Listar Jogadores \n3 - Sair");
             System.out.println("opção: ");
             opc = ler.nextInt();
             System.out.println(" ");
@@ -24,7 +24,7 @@ public class JogadorTeste {
             if (opc == 1) {
                 int opc_tipo = 0;
                 while (opc_tipo != 3) {
-                    System.out.println("1 - Cadastrar novo Ponteiro \n2 - Cadastrar novo Levantador \n3 - Sair");
+                    System.out.println("1 - Cadastrar Ponteiro \n2 - Cadastrar Levantador \n3 - Sair");
                     System.out.println("opção: ");
                     opc_tipo = ler.nextInt();
                     System.out.println(" ");
@@ -49,7 +49,7 @@ public class JogadorTeste {
                     } else if (opc_tipo == 3) {
                         System.out.println("Voltando..");
                     } else {
-                        System.out.println("Tipo de cadastro invalido, Por favor, escolha uma opção valida.");
+                        System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
                     }
                 }
             } else if (opc == 2) {
@@ -64,7 +64,6 @@ public class JogadorTeste {
             } else {
                 System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
             }
-        }
-        ;
+        };
     }
 }
