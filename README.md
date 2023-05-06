@@ -1,6 +1,6 @@
 # Faculdead
 
-## Pasta para as matérias da Faculdade de engenharia de software.
+## Repositório  para as matérias da Faculdade de engenharia de software.
 
 ### Matérias 2º Ano:
 > 💻 Arquitetura de Computadores.<br>
