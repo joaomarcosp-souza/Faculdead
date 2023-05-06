@@ -5,10 +5,7 @@
 ### Matérias 2º Ano:
 > 💻 Arquitetura de Computadores.<br>
 > 🔍 Algoritmos e Estruturas de Dados II.<br>
-> 📊 Análise e Projeto de Sistemas.<br>
 > 💾 Banco de Dados II.<br>
-> 🧮 Cálculo.<br>
-> 🚀 Empreendedorismo em Tecnologia da Informação.<br>
 > 🤝 Interação Humano-Computador.<br>
 > 🎯 Programação Orientada a Objetos.<br>
 > 🤝 Projeto Integrador.<br>
