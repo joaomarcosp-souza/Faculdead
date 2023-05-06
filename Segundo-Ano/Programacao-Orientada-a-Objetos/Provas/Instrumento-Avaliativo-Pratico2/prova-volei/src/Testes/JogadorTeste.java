@@ -8,7 +8,6 @@ import Principal.Ponteiro;
 
 public class JogadorTeste {
     public static void main(String[] args) {
-
         // Classe para ler os atributos
         Scanner ler = new Scanner(System.in);
 
@@ -31,7 +30,7 @@ public class JogadorTeste {
                     System.out.println(" ");
                     if (opc_tipo == 1) {
                         System.out.println("Nome: ");
-                        String nome = ler.next();
+                        String nome = ler.nextLine();
                         System.out.println("Idade: ");
                         int idade = ler.nextInt();
                         System.out.println("Altura: ");
@@ -40,7 +39,7 @@ public class JogadorTeste {
                         cont_jogador++;
                     } else if (opc_tipo == 2) {
                         System.out.println("Nome: ");
-                        String nome = ler.next();
+                        String nome = ler.nextLine();
                         System.out.println("Idade: ");
                         int idade = ler.nextInt();
                         System.out.println("Experiencia: ");
