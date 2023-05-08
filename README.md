@@ -1,4 +1,4 @@
-# Faculdead 🪦
+# Faculdead 2.0 🪦
 
 ## Repositório  para as matérias da Faculdade de engenharia de software.
 
@@ -10,4 +10,4 @@
 > 🎯 Programação Orientada a Objetos.<br>
 > 🤝 Projeto Integrador.<br>
 
-### Outras Matérias [Notion](https://economic-evergreen-291.notion.site/Faculdead-2-0-58ffb3de2adc4e6da1e7451226da11cb).
+### Restante das matérias disponíveis no [Notion](https://faculdead.notion.site/Faculdead-2-0-58ffb3de2adc4e6da1e7451226da11cb).
