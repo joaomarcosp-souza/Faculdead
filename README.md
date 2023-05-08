@@ -10,4 +10,4 @@
 > 🎯 Programação Orientada a Objetos.<br>
 > 🤝 Projeto Integrador.<br>
 
-### Materiais extras [Notion](https://economic-evergreen-291.notion.site/Faculdead-2-0-58ffb3de2adc4e6da1e7451226da11cb).
+### Outras Matérias [Notion](https://economic-evergreen-291.notion.site/Faculdead-2-0-58ffb3de2adc4e6da1e7451226da11cb).
