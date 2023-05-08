@@ -1,4 +1,4 @@
-# Faculdead
+# Faculdead 🪦
 
 ## Repositório  para as matérias da Faculdade de engenharia de software.
 
