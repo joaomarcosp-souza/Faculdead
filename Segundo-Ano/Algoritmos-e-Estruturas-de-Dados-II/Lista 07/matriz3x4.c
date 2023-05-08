@@ -23,6 +23,10 @@ int main()
     {
         for (int j = 0; j < 4; j++)
         {
+            printf("Matriz A: ");
+            printf("%i \n", matriz_A[i][j]);
+
+            printf("Dobro da Matriz A: ");
             printf("%i \n", matriz_B[i][j]);
         }
     }

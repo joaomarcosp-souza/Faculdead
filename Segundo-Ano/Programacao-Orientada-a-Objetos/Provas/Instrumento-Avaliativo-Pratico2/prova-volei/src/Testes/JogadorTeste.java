@@ -11,9 +11,14 @@ public class JogadorTeste {
         // Classe para ler os atributos
         Scanner ler = new Scanner(System.in);
 
+        // Declaração das Variaveis.
+        int cont_jogador = 0, opc = 0, qtde_cadastro = 0;
+
+        System.out.println("Quantos Jogadores serão cadastrados? ");
+        qtde_cadastro = ler.nextInt();
+
         // array de objeto
-        Jogadores[] jogadores = new Jogadores[200];
-        int cont_jogador = 0, opc = 0;
+        Jogadores[] jogadores = new Jogadores[qtde_cadastro];
 
         while (opc != 3) {
             System.out.println("1 - Cadastrar Jogador \n2 - Listar Jogadores \n3 - Sair");
@@ -29,20 +34,22 @@ public class JogadorTeste {
                     opc_tipo = ler.nextInt();
                     System.out.println(" ");
                     if (opc_tipo == 1) {
-                        System.out.println("Nome: ");
-                        String nome = ler.nextLine();
-                        System.out.println("Idade: ");
+                        System.out.printf("Nome:");
+                        String nome = ler.next();
+                        ler.nextLine(); // Criado para ler os demais valores informados.
+                        System.out.println("Idade:");
                         int idade = ler.nextInt();
-                        System.out.println("Altura: ");
+                        System.out.println("Altura:");
                         double altura = ler.nextDouble();
                         jogadores[cont_jogador] = new Ponteiro(nome, idade, altura);
                         cont_jogador++;
                     } else if (opc_tipo == 2) {
-                        System.out.println("Nome: ");
-                        String nome = ler.nextLine();
-                        System.out.println("Idade: ");
+                        System.out.println("Nome:");
+                        String nome = ler.next();
+                        ler.nextLine(); // Criado para ler os demais valores informados.
+                        System.out.println("Idade:");
                         int idade = ler.nextInt();
-                        System.out.println("Experiencia: ");
+                        System.out.println("Experiencia:");
                         int experiencia = ler.nextInt();
                         jogadores[cont_jogador] = new Levantador(nome, idade, experiencia);
                         cont_jogador++;
@@ -52,15 +59,17 @@ public class JogadorTeste {
                         System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
                     }
                 }
+
             } else if (opc == 2) {
                 for (int i = 0; i < cont_jogador; i++) {
-                    System.out.println("Jogador: " + i+1);
+                    System.out.println("Jogador: " + (i + 1));
                     jogadores[i].imprimirJogador();
-                    System.out.println("\n");
                 }
+
             } else if (opc == 3) {
                 System.out.println("Saindo...");
                 break;
+
             } else {
                 System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
             }
