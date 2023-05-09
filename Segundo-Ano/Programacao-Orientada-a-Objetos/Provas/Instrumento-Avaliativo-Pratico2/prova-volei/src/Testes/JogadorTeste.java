@@ -59,7 +59,6 @@ public class JogadorTeste {
                         System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
                     }
                 }
-
             } else if (opc == 2) {
                 for (int i = 0; i < cont_jogador; i++) {
                     System.out.println("Jogador: " + (i + 1));
