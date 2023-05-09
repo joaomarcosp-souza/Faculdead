@@ -2,8 +2,6 @@ package TesteClasse;
 
 import java.util.Scanner;
 
-import javax.print.event.PrintEvent;
-
 import Classes.Funcionario;
 import Classes.Pessoa;
 
