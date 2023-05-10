@@ -1,6 +1,6 @@
 package ClassesInformacoes;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import ClasseReservas.Reserva;
 
@@ -10,12 +10,12 @@ public class Pessoa {
     protected String telefone;
     protected String senha;
     protected boolean ativo = true;
-    protected Date dataAtuzalizacao;
-    protected Date dataCriacao; 
-    protected Reserva reserva;
+    protected LocalDateTime dataAtuzalizacao;
+    protected LocalDateTime dataCriacao;
+    private Reserva reserva; 
 
     public Pessoa(String nome,String email, String telefone, String senha, 
-        boolean ativo, Date dataAtuzalizacao, Date dataCriacao, Reserva reserva){
+        boolean ativo, LocalDateTime dataAtuzalizacao, LocalDateTime dataCriacao, Reserva reserva){
             this.nome = nome;
             this.email = email;
             this.telefone = telefone;

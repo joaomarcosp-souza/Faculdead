@@ -1,20 +1,22 @@
 package ClassesInformacoes;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import ClasseReservas.Reserva;
 
-public final class Bibliotecario extends Pessoa{
+public final class Bibliotecario extends Pessoa {
     private String siape;
 
-    public Bibliotecario(String nome, String email, String telefone, String senha, boolean ativo, Date dataAtuzalizacao,
-            Date dataCriacao, Reserva reserva, String siape) {
+    public Bibliotecario(String nome, String email, String telefone, String senha, boolean ativo,
+            LocalDateTime dataAtuzalizacao,
+            LocalDateTime dataCriacao, Reserva reserva, String siape) {
         super(nome, email, telefone, senha, ativo, dataAtuzalizacao, dataCriacao, reserva);
         this.siape = siape;
     }
 
-    public void imprimirDados(){
-        System.out.printf("Nome: %s\n E-mail: %s \n Telefone: %s \n Senha: %s \n Siape: %s", nome, email, telefone, senha, siape);
+    public void imprimirDados() {
+        System.out.printf("Nome: %s\n E-mail: %s \n Telefone: %s \n Senha: %s \n Siape: %s", nome, email, telefone,
+                senha, siape);
         System.out.println("Ativo: " + ativo);
         System.out.println("Data :" + dataAtuzalizacao);
     }
@@ -69,21 +71,20 @@ public final class Bibliotecario extends Pessoa{
         this.ativo = ativo;
     }
 
-    public Date getDataAtuzalizacao() {
+    public LocalDateTime getDataAtuzalizacao() {
         return dataAtuzalizacao;
     }
 
-    public void setDataAtuzalizacao(Date dataAtuzalizacao) {
+    public void setDataAtuzalizacao(LocalDateTime dataAtuzalizacao) {
         this.dataAtuzalizacao = dataAtuzalizacao;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     };
 
-    
 }

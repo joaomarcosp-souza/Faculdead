@@ -1,47 +1,52 @@
 package ClasseReservas;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class Reserva extends Armario{
-    private Date dataHoraDevoculacao;
-    private Date HoraEmprestimo;
-    private Armario armario;
+import ClassesInformacoes.Pessoa;
 
-    
+public class Reserva extends Armario {
+    private LocalDateTime dataHoraDevoculacao;
+    private LocalDateTime HoraEmprestimo;
+    private Pessoa pessoa;
 
-    public Reserva(String numero, boolean ativo, String observacoes, Date dataHoraDevoculacao, Date horaEmprestimo,
-            Armario armario) {
-        super(numero, ativo, observacoes);
+    public Reserva(String numero, boolean ativo, String observacoes, Reserva reserva,
+            LocalDateTime dataHoraDevoculacao,
+            LocalDateTime horaEmprestimo, Pessoa pessoa) {
+        super(numero, ativo, observacoes, reserva);
         this.dataHoraDevoculacao = dataHoraDevoculacao;
         HoraEmprestimo = horaEmprestimo;
-        this.armario = armario;
+        this.pessoa = pessoa;
     }
 
-    public void imprimirReserva(){};
+    public void imprimirDados() {
+        System.out.printf("Número Armario: %s");
+        System.out.println("Data Devolução: " + dataHoraDevoculacao);
+        System.out.println("Hora Emprestimo: " + HoraEmprestimo);
+        System.out.println("Pessoa: " + pessoa);
+    }
 
-    public Date getDataHoraDevoculacao() {
+    public LocalDateTime getDataHoraDevoculacao() {
         return dataHoraDevoculacao;
     }
 
-    public void setDataHoraDevoculacao(Date dataHoraDevoculacao) {
+    public void setDataHoraDevoculacao(LocalDateTime dataHoraDevoculacao) {
         this.dataHoraDevoculacao = dataHoraDevoculacao;
     }
 
-    public Date getHoraEmprestimo() {
+    public LocalDateTime getHoraEmprestimo() {
         return HoraEmprestimo;
     }
 
-    public void setHoraEmprestimo(Date horaEmprestimo) {
+    public void setHoraEmprestimo(LocalDateTime horaEmprestimo) {
         HoraEmprestimo = horaEmprestimo;
     }
 
-    public Armario getArmario() {
-        return armario;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setArmario(Armario armario) {
-        this.armario = armario;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    
 }
