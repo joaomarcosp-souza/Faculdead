@@ -1,14 +1,16 @@
 package ClassesInformacoes;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
+
 import ClasseReservas.Reserva;
 
 public final class Estudante extends Pessoa{
     private String ra;
     
     public Estudante(String nome, String email, String telefone, String senha, boolean ativo, 
-            LocalDateTime dataAtuzalizacao,
-            LocalDateTime dataCriacao, Reserva reserva, String ra) {
+            LocalDate dataAtuzalizacao,
+            LocalDate dataCriacao, Reserva reserva, String ra) {
         super(nome, email, telefone, senha, ativo, dataAtuzalizacao, dataCriacao, reserva);
         this.ra = ra;
     }
@@ -69,19 +71,19 @@ public final class Estudante extends Pessoa{
         this.ativo = ativo;
     }
 
-    public LocalDateTime getDataAtuzalizacao() {
+    public LocalDate getDataAtuzalizacao() {
         return dataAtuzalizacao;
     }
 
-    public void setDataAtuzalizacao(LocalDateTime dataAtuzalizacao) {
+    public void setDataAtuzalizacao(LocalDate dataAtuzalizacao) {
         this.dataAtuzalizacao = dataAtuzalizacao;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     };
     
