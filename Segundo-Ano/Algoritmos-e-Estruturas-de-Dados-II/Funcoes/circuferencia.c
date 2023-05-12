@@ -3,8 +3,7 @@
 
 float calculaArea(float raio)
 {
-    float area;
-    area = 3.14 * pow(raio, 2);
+    float area = 3.14 * pow(raio, 2);
     return (area);
 };
 
@@ -17,7 +16,7 @@ int main()
 
     area = calculaArea(raio);
 
-    printf("Area: %f", area);
+    printf("Area: %.2f", area);
 
     return 0;
 };

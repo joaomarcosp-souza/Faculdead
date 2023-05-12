@@ -18,11 +18,8 @@ int main()
 
     char cadeia[20], one;
 
-    for (int i = 0; i < 20; i++)
-    {
-        printf("Informe o valor para o %d caracter: ", i + 1);
-        scanf(" %c", &cadeia[i]);
-    }
+    printf("Informe uma cadeia de  caracters ate o maximo de 20: ");
+    gets(cadeia);
 
     printf("Informe um caractere para a contagem deles na cadeia: ");
     scanf(" %c", &one);
