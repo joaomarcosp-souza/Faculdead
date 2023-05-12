@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/João Marcos/Desktop/Faculdead/Segundo-Ano/Algoritmos-e-Estruturas-de-Dados-II/Funcoes",
-      "program": "c:/Users/João Marcos/Desktop/Faculdead/Segundo-Ano/Algoritmos-e-Estruturas-de-Dados-II/Funcoes/build/Debug/outDebug",
+      "cwd": "c:/Users/João Marcos/Desktop/Faculdead/Segundo-Ano/Algoritmos-e-Estruturas-de-Dados-II/Funcoes/Listas",
+      "program": "c:/Users/João Marcos/Desktop/Faculdead/Segundo-Ano/Algoritmos-e-Estruturas-de-Dados-II/Funcoes/Listas/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

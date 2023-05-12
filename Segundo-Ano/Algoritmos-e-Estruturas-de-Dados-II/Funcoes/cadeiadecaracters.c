@@ -19,7 +19,7 @@ int main()
     char cadeia[20], one;
 
     printf("Informe uma cadeia de  caracters ate o maximo de 20: ");
-    gets(cadeia);
+    fgets(cadeia, 20, stdin);
 
     printf("Informe um caractere para a contagem deles na cadeia: ");
     scanf(" %c", &one);
