@@ -26,6 +26,14 @@ public class JogadorTeste {
             opc = ler.nextInt();
             System.out.println(" ");
 
+            while (opc < 1 || opc > 3) {
+                System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
+                System.out.println("1 - Cadastrar Jogador \n2 - Listar Jogadores \n3 - Sair");
+                System.out.println("opção: ");
+                opc = ler.nextInt();
+                System.out.println(" ");
+            }
+
             if (opc == 1) {
                 int opc_tipo = 0;
                 while (opc_tipo != 3) {
@@ -72,6 +80,7 @@ public class JogadorTeste {
             } else {
                 System.out.println("Opção invalida, Por favor, escolha uma opção valida.");
             }
-        };
+        }
+        ;
     }
 }
