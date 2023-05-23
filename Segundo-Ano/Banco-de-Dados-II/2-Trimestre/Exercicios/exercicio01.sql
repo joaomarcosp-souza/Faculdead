@@ -87,20 +87,14 @@ VALUES ('Aragorn', 'O Herdeiro de Gondor', 'Dúnedain', '1990-03-15', 1, 1, 1, 1
 	   ('Sauron', NULL, NULL, '1500-01-01', 4, NULL, 1, NULL);
 
 -- A
-SELECT a.nome, l.nome
+SELECT a.nome AS aluno, l.nome AS local_nome
 FROM arma a
 LEFT JOIN ser s ON s.arma_id = a.id_arma
 LEFT JOIN local l ON s.local_id = l.id_local
 WHERE s.arma_id IS NOT NULL AND s.local_id IS NOT NULL
 GROUP BY a.nome, l.nome;
 
--- B
-/* SELECT c.nome, l.regiao
-FROM classe c
-LEFT JOIN ser s ON s.classe_id = c.id_classe
-LEFT JOIN local l ON s.local_id = l.id_local
-GROUP BY c.nome, l.regiao; */
-		
+-- B		
 SELECT c.nome AS classe, l.regiao
 FROM classe c
 CROSS JOIN local l;

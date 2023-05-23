@@ -1,0 +1,128 @@
+DROP TABLE IF EXISTS batalha;
+DROP TABLE IF EXISTS item_personagem;
+DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS personagem;
+DROP TABLE IF EXISTS raca CASCADE;
+DROP TABLE IF EXISTS evento;
+DROP TABLE IF EXISTS local CASCADE;
+DROP TABLE IF EXISTS reino;
+
+CREATE TABLE raca(
+	id INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	descricao VARCHAR(100)
+);
+
+CREATE TABLE personagem(
+	id INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	idade INT,
+	genero VARCHAR(1),
+	habilidades VARCHAR(100),
+	id_raca INTEGER REFERENCES raca(id)
+);
+
+CREATE TABLE item(
+	id INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	tipo VARCHAR(100),
+	descricao VARCHAR(100),
+	poder VARCHAR(100)
+);
+
+CREATE TABLE item_personagem(
+	id INTEGER PRIMARY KEY,
+	id_item INTEGER REFERENCES item(id),
+	id_personagem INTEGER REFERENCES personagem(id)
+);
+
+CREATE TABLE evento(
+	id INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	data TIMESTAMP
+);
+
+CREATE TABLE reino(
+	id INTEGER PRIMARY KEY,
+	nome VARCHAR(100)
+);
+
+CREATE TABLE local(
+	id INTEGER PRIMARY KEY,
+	id_reino INTEGER REFERENCES reino(id),
+	nome VARCHAR(45)
+);
+
+CREATE TABLE batalha(
+	id INTEGER PRIMARY KEY,
+	id_local INTEGER REFERENCES local(id),
+	id_evento INTEGER REFERENCES evento(id),
+	id_personagem INTEGER REFERENCES personagem(id)
+);
+
+-- Inserção na tabela "raca"
+INSERT INTO raca (id, nome, descricao)
+VALUES (1, 'Humano', 'Raça dos homens'),
+       (2, 'Elfo', 'Raça élfica'),
+       (3, 'Anão', 'Raça dos anões'),
+       (4, 'Hobbit', 'Raça dos hobbits');
+
+-- Inserção na tabela "personagem"
+INSERT INTO personagem (id, nome, idade, genero, habilidades, id_raca)
+VALUES (1, 'Aragorn', 87, 'M', 'Espadachim habilidoso', 1),
+       (2, 'Legolas', 2931, 'M', 'Arqueiro exímio', 2),
+       (3, 'Gimli', 139, 'M', 'Hábil com machado de guerra', 3),
+       (4, 'Frodo Bolseiro', 51, 'M', 'Portador do Um Anel', 4);
+
+-- Inserção na tabela "item"
+INSERT INTO item (id, nome, tipo, descricao, poder)
+VALUES (1, 'Andúril', 'Espada', 'Espada forjada a partir de Narsil', 'Confere coragem e poder ao portador'),
+       (2, 'Arco Élfico', 'Arco', 'Arco élfico feito de madeira especial', 'Permite disparos precisos e longos alcances'),
+       (3, 'Machado de Guerra', 'Arma', 'Machado de guerra anão com lâmina afiada', 'Causa danos devastadores em combate'),
+       (4, 'Um Anel', 'Acessório', 'Anel poderoso criado por Sauron', 'Concede invisibilidade e controle sobre outros anéis');
+
+-- Inserção na tabela "item_personagem"
+INSERT INTO item_personagem (id, id_item, id_personagem)
+VALUES (1, 1, 1),
+       (2, 2, 2),
+       (3, 3, 3),
+       (4, 4, 4);
+
+-- Inserção na tabela "evento"
+INSERT INTO evento (id, nome, data)
+VALUES (1, 'Batalha de Gondor', '3019-03-15 10:00:00'),
+       (2, 'Conselho de Elrond', '3018-12-25 18:30:00'),
+       (3, 'Festa dos Hobbits', '3019-03-04 20:00:00');
+
+-- Inserção na tabela "reino"
+INSERT INTO reino (id, nome)
+VALUES (1, 'Gondor'),
+       (2, 'Rohan'),
+       (3, 'Lórien');
+
+-- Inserção na tabela "local"
+INSERT INTO local (id, id_reino, nome)
+VALUES (1, 1, 'Minas Tirith'),
+       (2, 2, 'Edoras'),
+       (3, 3, 'Caras Galadhon');
+
+-- Inserção na tabela "batalha"
+INSERT INTO batalha (id, id_local, id_evento, id_personagem)
+VALUES (1, 1, 1, 1),
+       (2, 2, 2, 2),
+       (3, 3, 3, 3);
+	   
+-- A
+SELECT r.nome, l.nome AS nome_local
+FROM raca r
+INNER JOIN personagem p ON r.id = p.id_raca
+INNER JOIN batalha b ON p.id = b.id_personagem
+INNER JOIN local l ON b.id_local = l.id
+GROUP BY r.nome, l.nome
+	   
+-- B
+SELECT i.nome AS item, p.nome AS nome_personagem
+FROM item i
+LEFT JOIN item_personagem ip ON i.id = ip.id_item
+LEFT JOIN personagem p ON ip.id_personagem = p.id
+GROUP BY i.nome, p.nome

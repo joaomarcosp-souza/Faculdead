@@ -87,5 +87,3 @@ INNER JOIN alunos a ON i.alunos_id_aluno = a.id_aluno
 INNER JOIN alimentos ali ON i.alimentos_id_alimento = ali.id_alimentos
 WHERE c.nome LIKE '%Grifinória%' OR c.nome LIKE '%Sonserina%'
 GROUP BY c.nome, a.nome, ali.nome
-
--- C
