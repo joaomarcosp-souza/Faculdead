@@ -1,0 +1,91 @@
+DROP TABLE IF EXISTS inventario;
+DROP TABLE IF EXISTS intens_magicos;
+DROP TABLE IF EXISTS alunos;
+DROP TABLE IF EXISTS casas;
+DROP TABLE IF EXISTS alimentos;
+
+CREATE TABLE casas(
+	id_casa INTEGER PRIMARY KEY,
+	nome VARCHAR(255),
+	fundador VARCHAR(255),
+	cores VARCHAR(50),
+	caracteristicas VARCHAR(255),
+	diretor VARCHAR(255)
+);
+
+CREATE TABLE alunos(
+	id_aluno INTEGER PRIMARY KEY,
+	nome VARCHAR(255),
+	idade INT,
+	patrono VARCHAR(100),
+	casas_id_casa INTEGER REFERENCES casas(id_casa)
+);
+
+CREATE TABLE intens_magicos(
+	id_itens_magicos INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	descricao VARCHAR(100),
+	efeito VARCHAR(100),
+	contra_efeito VARCHAR(100),
+	tipo VARCHAR(100),
+	alunos_id_aluno INTEGER REFERENCES alunos(id_aluno)
+);
+
+CREATE TABLE alimentos(
+	id_alimentos INTEGER PRIMARY KEY,
+	nome VARCHAR(255),
+	quantidade INT,
+	categoria VARCHAR(100),
+	validade TIMESTAMP,
+	alucinogeno SMALLINT
+);
+
+CREATE TABLE inventario(
+	id_inventario INTEGER PRIMARY KEY,
+	casas_id_casa INTEGER REFERENCES casas(id_casa),
+	alimentos_id_alimento INTEGER REFERENCES alimentos(id_alimentos),
+	alunos_id_aluno INTEGER REFERENCES alunos(id_aluno),
+	itens_magicos_id_itens_magicos INTEGER REFERENCES intens_magicos(id_itens_magicos)
+);
+
+INSERT INTO casas (id_casa, nome, fundador, cores, caracteristicas, diretor)
+VALUES (1, 'Grifinória', 'Godric Gryffindor', 'Vermelho e dourado', 'Coragem, bravura', 'Minerva McGonagall'),
+	   (2, 'Sonserina', 'Salazar Slytherin', 'Verde e prata', 'Astúcia, ambição', 'Severo Snape'),
+       (3, 'Lufa-Lufa', 'Helga Hufflepuff', 'Amarelo e preto', 'Lealdade, paciência', 'Pomona Sprout');
+	   
+INSERT INTO alunos (id_aluno, nome, idade, patrono, casas_id_casa)
+VALUES (1, 'Harry Potter', 11, 'Golfinho', 1),
+	   (2, 'Draco Malfoy', 11, 'Serpente', 2),
+	   (3, 'Cedrico Diggory', 17, 'Texugo', 3);
+
+INSERT INTO intens_magicos (id_itens_magicos, nome, descricao, efeito, contra_efeito, tipo, alunos_id_aluno)
+VALUES (1, 'Varinha das Varinhas', 'Poderosa varinha lendária', 'Concede grande poder ao seu dono', 'Pode ser roubada e não funciona corretamente para todos', 'Varinha', 1),
+	   (2, 'Mapa do Maroto', 'Mapa mágico que mostra a localização de todos em Hogwarts', 'Permite ver a localização de pessoas e passagens secretas', 'Nenhum conhecido', 'Mapa', 1),
+	   (3, 'Pedra da Ressurreição', 'Pedra mágica que traz os mortos de volta à vida', 'Permite ver e se comunicar com pessoas que já morreram', 'Não pode trazer de volta à vida os mortos de verdade', 'Pedra', 2);
+
+INSERT INTO alimentos (id_alimentos, nome, quantidade, categoria, validade, alucinogeno)
+VALUES (1, 'Maçã', 10, 'Frutas', '2023-06-01 12:00:00', 0),
+ 	   (2, 'Pão', 20, 'Grãos', '2023-05-30 09:30:00', 0),
+	   (3, 'Cogumelo', 5, 'Vegetais', '2023-06-05 18:00:00', 1);
+	   
+INSERT INTO inventario (id_inventario, casas_id_casa, alimentos_id_alimento, alunos_id_aluno, itens_magicos_id_itens_magicos)
+VALUES (1, 1, 1, 1, NULL),
+	   (2, 2, 2, 2, 1),
+ 	   (3, 3, 3, 3, 2);
+
+-- A
+SELECT c.fundador, it.nome AS nome_item_magico
+FROM casas c
+LEFT JOIN intens_magicos it ON c.id_casa = it.alunos_id_aluno
+WHERE it.alunos_id_aluno IS NOT NULL;
+
+-- B
+SELECT a.nome AS aluno, c.nome AS casa, ali.nome AS alimento
+FROM casas c
+INNER JOIN inventario i ON i.casas_id_casa = c.id_casa
+INNER JOIN alunos a ON i.alunos_id_aluno = a.id_aluno
+INNER JOIN alimentos ali ON i.alimentos_id_alimento = ali.id_alimentos
+WHERE c.nome LIKE '%Grifinória%' OR c.nome LIKE '%Sonserina%'
+GROUP BY c.nome, a.nome, ali.nome
+
+-- C
