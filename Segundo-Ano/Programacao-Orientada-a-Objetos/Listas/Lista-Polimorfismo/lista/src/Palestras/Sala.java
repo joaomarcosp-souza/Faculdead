@@ -16,7 +16,6 @@ public class Sala {
         System.out.println("Capacidade: " + this.capacidade);
         System.out.println("Nome: " + this.nome);
         System.out.println("Local: " + this.local);
-
     }
 
     public int getCapacidade() {

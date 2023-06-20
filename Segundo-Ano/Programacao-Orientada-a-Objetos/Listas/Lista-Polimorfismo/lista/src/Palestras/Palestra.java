@@ -4,13 +4,20 @@ import java.util.Date;
 
 public class Palestra {
     String tema;
-    Date diaHora;
+    String diaHora;
     boolean exigeFrequencia;
     
-    public Palestra(String tema, Date diaHora, boolean exigeFrequencia) {
+    public Palestra(String tema, String diaHora, boolean exigeFrequencia) {
         this.tema = tema;
         this.diaHora = diaHora;
         this.exigeFrequencia = exigeFrequencia;
+    }
+
+    public void ImprimirDados() {
+        System.out.println("Informações Palestra: \n");
+        System.out.println("Tema: " + this.tema);
+        System.out.println("Dia e Hora: " + this.diaHora);
+        System.out.println("Exige frequencia: " + this.exigeFrequencia);
     }
 
     public String getTema() {
@@ -19,10 +26,10 @@ public class Palestra {
     public void setTema(String tema) {
         this.tema = tema;
     }
-    public Date getDiaHora() {
+    public String getDiaHora() {
         return diaHora;
     }
-    public void setDiaHora(Date diaHora) {
+    public void setDiaHora(String diaHora) {
         this.diaHora = diaHora;
     }
     public boolean isExigeFrequencia() {

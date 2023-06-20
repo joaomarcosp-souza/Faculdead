@@ -5,6 +5,7 @@ public class Certificado {
     int folha;
     int pagina;
     int numeroDoCertificado;
+    Certificado certificado;
 
     public Certificado(int livro, int folha, int pagina, int numeroDoCertificado) {
         this.livro = livro;
@@ -20,6 +21,10 @@ public class Certificado {
         System.out.println("Página: " + this.pagina);
         System.out.println("Número do Certificado: " + this.numeroDoCertificado);
 
+    }
+
+    public void receberCertificado(Certificado certificado) {
+        this.certificado = certificado;
     }
 
     public int getLivro() {

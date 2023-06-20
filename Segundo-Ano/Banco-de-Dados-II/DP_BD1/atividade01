@@ -1,0 +1,120 @@
+CREATE TABLE Projetos (
+    ID SERIAL PRIMARY KEY,
+    Nome_do_projeto VARCHAR(255),
+    Descricao TEXT,
+    Data_de_inicio DATE,
+    Data_de_conclusao_prevista DATE,
+    Orcamento DECIMAL(10, 2)
+);
+
+CREATE TABLE Artistas (
+    ID SERIAL PRIMARY KEY,
+    Nome VARCHAR(255),
+    Sobrenome VARCHAR(255),
+    Nacionalidade VARCHAR(255),
+    Estilo_artes_praticadas VARCHAR(255)
+);
+
+CREATE TABLE Obras (
+    ID SERIAL PRIMARY KEY,
+    ID_do_projeto INT REFERENCES Projetos(ID),
+    ID_do_artista INT REFERENCES Artistas(ID),
+    Titulo_da_obra VARCHAR(255),
+    Materiais_utilizados TEXT,
+    Ano_de_criacao INTEGER
+);
+
+CREATE TABLE Exibicoes (
+    ID SERIAL PRIMARY KEY,
+    ID_da_obra INT REFERENCES Obras(ID),
+    Local_de_exibicao VARCHAR(255),
+    Data_de_inicio DATE,
+    Data_de_termino DATE,
+    Curador VARCHAR(255)
+);
+
+CREATE TABLE Premios (
+    ID SERIAL PRIMARY KEY,
+    ID_da_obra INT REFERENCES Obras(ID),
+    Nome_do_premio VARCHAR(255),
+    Categoria VARCHAR(255),
+    Data_de_premiacao DATE
+);
+
+INSERT INTO Projetos (Nome_do_projeto, Descricao, Data_de_inicio, Data_de_conclusao_prevista, Orcamento)
+VALUES ('Construção de um Centro Comunitário', 'Construção de um centro comunitário', '2023-01-15', '2024-06-30', 100000.00),
+       ('Desenvolvimento de um aplicativo móvel', 'Desenvolvimento de um aplicativo móvel', '2023-05-01', '2023-11-30', 50000.00),
+       ('Expansão de uma fábrica de alimentos', 'Expansão da capacidade produtiva', '2022-10-01', '2023-03-31', 200000.00),
+       ('Implementação de um sistema de gestão empresarial', 'Implementação de um sistema', '2023-02-15', '2024-01-31', 80000.00),
+       ('Realização de um festival de música', 'Organização de um festival de música', '2024-06-15', '2024-07-15', 150000.00);
+
+INSERT INTO Artistas (Nome, Sobrenome, Nacionalidade, Estilo_artes_praticadas)
+VALUES ('João', 'Marcos', 'Brasileiro', 'Pintura'),
+       ('Back', 'Florentino', 'Alemão', 'Escultura'),
+       ('Luiz', 'Inacio', 'Português', 'Fotografia'),
+       ('Cauê', 'Grande', 'Japonês', 'Instalação'),
+       ('Gustavo', 'Lopes', 'Espanhol', 'Gravura');
+
+INSERT INTO Obras (ID_do_projeto, ID_do_artista, Titulo_da_obra, Materiais_utilizados, Ano_de_criacao)
+VALUES (1, 1, 'Mona Lisa', 'Óleo sobre tela', 1503),
+       (2, 2, 'Guernica', 'Óleo sobre tela', 1937),
+       (3, 3, 'Starry Night', 'Óleo sobre tela', 1889),
+       (4, 4, 'The Persistence of Memory', 'Óleo sobre tela', 1931),
+       (5, 5, 'The Scream', 'Tempera e pastel sobre cartão', 1893);
+	   
+INSERT INTO Premios (ID_da_obra, Nome_do_premio, Categoria, Data_de_premiacao)
+VALUES (1, 'Prêmio de Melhor Pintura', 'Pintura', '2023-05-20'),
+       (2, 'Prêmio de Escultura', 'Escultura', '2024-08-10'),
+       (3, 'Prêmio de Fotografia', 'Fotografia', '2022-12-10'),
+       (4, 'Prêmio de Melhor Instalação', 'Instalação', '2023-09-15'),
+       (5, 'Prêmio de Gravura', 'Gravura', '2024-05-05');
+
+
+INSERT INTO Exibicoes (ID_da_obra, Local_de_exibicao, Data_de_inicio, Data_de_termino, Curador)
+VALUES (1, 'Louvre Museum', '2023-03-01', '2023-03-15', 'John Smith'),
+       (2, 'Reina Sofia Museum', '2024-05-10', '2024-06-10', 'Maria Rodriguez'),
+       (3, 'Museum of Modern Art', '2022-11-20', '2022-12-05', 'Laura Thompson'),
+       (4, 'Guggenheim Museum', '2023-07-01', '2023-07-31', 'Michael Johnson'),
+       (5, 'National Gallery', '2024-03-01', '2024-04-15', 'Sophie Wilson');
+
+
+-- Exibir o nome do projeto, data de início de data de conclusão prevista dos projetos
+SELECT Nome_do_projeto, Data_de_inicio, Data_de_conclusao_prevista
+FROM Projetos;
+
+-- Exibir o nome, sobrenome e estilo dos artistas
+SELECT Nome, Sobrenome, Estilo_artes_praticadas
+FROM Artistas;
+
+-- Exibir o título da obra, ano de criação, ID do projeto e ID do artista na tabela "Obras"
+SELECT Titulo_da_obra, Ano_de_criacao, ID_do_projeto, ID_do_artista
+FROM Obras;
+
+-- Nome do prêmio, categoria e ID da obra na tabela "Prêmios":
+SELECT Nome_do_premio, Categoria, ID_da_obra
+FROM Premios;
+
+-- Mudar o local de exibição para "Casa da Cultura de Paranavaí" na tabela "Exibições", onde o id = 3
+UPDATE Exibicoes
+SET Local_de_exibicao = 'Casa da Cultura de Paranavaí'
+WHERE ID = 3;
+
+-- Mudar o nome do prêmio para "Maravilhosa Daniela Flôr" na tabela "Prêmios", onde o id = 2:
+UPDATE Premios
+SET Nome_do_premio = 'Maravilhosa Daniela Flôr'
+WHERE ID = 2;
+
+-- Mudar o nome do artista para "Zelda Link" na tabela "Artistas", onde o id = 4:
+UPDATE Artistas
+SET Nome = 'Zelda', Sobrenome = 'Link'
+WHERE ID = 4;
+
+-- Delete o prêmio de id = 1 na tabela "Prêmios":
+DELETE FROM Premios
+WHERE ID = 1;
+
+SELECT * FROM Projetos;
+SELECT * FROM Artistas;
+SELECT * FROM Obras;
+SELECT * FROM Premios;
+SELECT * FROM Exibicoes;
