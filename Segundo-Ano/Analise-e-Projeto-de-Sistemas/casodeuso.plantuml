@@ -1,0 +1,48 @@
+@startuml Caso De Uso V.01
+left to right direction
+
+actor "Administrador" as administrador
+actor "Gerente de Frota" as gerente
+actor "Motoristas" as motorista
+actor "Gerente Financeiro" as financeiro
+actor "Funcionário de Manutenção" as manutencao
+
+rectangle "Sistema" {
+    usecase "Gerenciar Veículos" as gerenciar_veiculos
+    usecase "Gerenciar Usuários" as gerenciar_usuarios
+    usecase "Agendar Reservas" as agendar_reservas
+    usecase "Gerenciar Reservas" as gerenciar_reservas
+    usecase "Gerenciar Abastecimento" as gerenciar_abastecimento
+    usecase "Emitir Relatórios" as emitir_relatorios
+
+    administrador -- agendar_reservas
+    administrador -- gerenciar_reservas
+
+    gerente -- gerenciar_veiculos
+    gerente -- gerenciar_usuarios
+    gerente -- emitir_relatorios
+
+    motorista -- gerenciar_reservas
+    motorista -- gerenciar_abastecimento
+
+    financeiro -- emitir_relatorios
+
+    manutencao -- gerenciar_veiculos
+    manutencao -- gerenciar_abastecimento
+
+    administrador --|> gerente : Herança
+
+    agendar_reservas --> gerenciar_reservas : Inclusão
+    gerenciar_reservas --> gerenciar_abastecimento : Extensão
+
+    administrador --> gerenciar_reservas : Aceitar/Rejeitar
+    motorista --> gerenciar_reservas : Atualizar Status
+    motorista --> gerenciar_abastecimento : Registrar Consumo
+    gerente --> gerenciar_veiculos : Adicionar/Remover
+    gerente --> gerenciar_usuarios : Gerenciar Níveis
+    gerente --> emitir_relatorios : Relatórios de Viagem
+    financeiro --> emitir_relatorios : Financeiros
+
+}
+
+@enduml
