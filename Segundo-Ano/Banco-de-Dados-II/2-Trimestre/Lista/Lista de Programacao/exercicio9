@@ -1,0 +1,15 @@
+DO $$
+
+DECLARE
+	id_produto INT;
+	
+BEGIN
+	id_produto := 2;
+	
+	IF (EXISTS (SELECT * FROM produtos WHERE id = id_produto)) THEN
+		DELETE FROM produtos WHERE id = id_cliente;
+	ELSE
+		raise notice 'O produto % não foi encontrado', id_produto;
+	END IF;
+	
+END $$

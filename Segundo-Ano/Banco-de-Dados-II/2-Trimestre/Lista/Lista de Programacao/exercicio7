@@ -1,0 +1,24 @@
+DO $$
+
+DECLARE
+	nome VARCHAR(50);
+	cargo VARCHAR(50);
+BEGIN
+	nome := 'João';
+	cargo := 'Gerente';
+	
+	raise notice 'O funcionario % ocupa o cargo %', nome, cargo;
+	
+	IF (cargo LIKE('Gerente')) THEN
+	
+		raise notice 'O salário do funcionário % é R$ 5000.00', nome;
+		
+	ELSIF (cargo LIKE('Analista')) THEN
+	
+		raise notice 'O salário do funcionário % é R$ 3000.00', nome;
+		
+	ELSE
+		raise notice 'O salário do funcionário % é R$ 2000.00', nome;
+	END IF;
+		
+END $$

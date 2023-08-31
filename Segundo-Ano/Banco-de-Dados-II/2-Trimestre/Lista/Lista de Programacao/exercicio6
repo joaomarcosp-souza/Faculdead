@@ -1,0 +1,17 @@
+DO $$
+
+DECLARE
+	nota NUMERIC(3,1);
+
+BEGINS
+	nota := 7.5;
+	
+	raise notice 'Sua nota é %', nota;
+	
+	IF (nota >= 6) THEN
+		raise notice 'Você foi aprovado!';
+	ELSE
+		raise notice 'Você foi reprovado!';
+	END IF;
+		
+END $$S

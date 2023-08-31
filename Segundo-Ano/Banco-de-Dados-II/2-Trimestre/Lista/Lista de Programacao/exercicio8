@@ -1,0 +1,16 @@
+DO $$
+
+DECLARE
+	id_cliente INT;
+	
+BEGIN
+	id_cliente := 1;
+	
+	IF (EXISTS (SELECT * FROM clientes WHERE id = id_cliente)) THEN
+		UPDATE clientes SET email = 'joao@gmail.com' WHERE id = id_cliente;
+	ELSE
+		INSERT INTO clientes (nome, email, telefone) VALUES ('João', 'joao@gmail.com', '123456789');
+	
+	END IF;
+	
+END $$

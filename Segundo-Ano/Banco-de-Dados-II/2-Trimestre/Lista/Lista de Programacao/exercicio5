@@ -1,0 +1,21 @@
+DO $$
+
+DECLARE
+	produto VARCHAR(100);
+
+BEGIN
+	produto := 'Notebook';
+	
+	raise notice 'O produto % esta disponivel em estoque', produto;
+	
+	IF (produto LIKE('Notebook')) THEN
+	
+		raise notice 'O preço do produto % é R$ 3000.00', produto;
+		
+	ELSE
+	
+		raise notice 'O produto % não foi encontrado', produto;
+		
+	END IF;
+		
+END $$

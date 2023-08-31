@@ -1,0 +1,13 @@
+DO $$
+
+DECLARE
+	salario NUMERIC(10, 2);
+	
+BEGIN
+	salario := 1000.00;
+	raise notice 'Seu salario atual é %', salario;
+	
+	salario := salario * 1.1;
+	raise notice 'Seu novo salário é R$ %', salario;
+	
+END $$
