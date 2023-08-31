@@ -1,0 +1,40 @@
+CREATE TABLE cliente_cartao (
+	id_cliente SERIAL PRIMARY KEY,
+	nome VARCHAR(255) NOT NULL,
+	cpf CHAR(11) NOT NULL,
+	telefone VARCHAR(20) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	renda DECIMAL(10,2) NOT NULL,
+	tipo_cartao VARCHAR(50) NOT NULL
+);
+
+DO $$
+
+DECLARE
+	nome VARCHAR(255) := 'joão';
+	cpf VARCHAR(12) := '123456789';
+	telefone VARCHAR(11) := '123654895';
+	email VARCHAR(50) := 'teste@gmail.com';
+	renda DECIMAL(10,2) := 2000.00;
+	tipo_cartao VARCHAR(50);
+	
+BEGIN
+	CASE
+	WHEN (renda >= 5000.00) THEN
+		tipo_cartao := 'Ouro';
+		raise notice 'Seu cartão e do tipo %', tipo_cartao;
+		
+	WHEN (renda >= 1500.00 AND renda <= 5000.00) THEN
+		tipo_cartao := 'Prata';
+		raise notice 'Seu cartão e do tipo %', tipo_cartao;
+	
+	ELSE
+		tipo_cartao := 'Bronze';
+		raise notice 'Seu cartão e do tipo %', tipo_cartao;
+	
+	END CASE;
+	
+	INSERT INTO cliente_cartao (nome, cpf, telefone, email, renda, tipo_cartao) 
+		VALUES (nome, cpf, telefone, email, renda, tipo_cartao);
+	
+END $$

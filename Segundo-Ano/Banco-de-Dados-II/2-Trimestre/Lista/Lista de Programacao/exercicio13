@@ -1,0 +1,19 @@
+CREATE TABLE alunos_conceitos (
+	id_aluno SERIAL NOT NULL PRIMARY KEY,
+	nome_aluno VARCHAR(255) NOT NULL,
+	conceito CHAR(1) NOT NULL
+);
+
+INSERT INTO alunos_conceitos (nome_aluno, conceito)
+VALUES ('Maria', 'A'),
+('Jose', 'B'),
+('Joao', 'C'),
+('Joaquim', 'D');
+
+SELECT nome, conceito
+CASE
+	WHEN conceito = 'A' THEN 'Bombom'
+	WHEN conceito = 'B' THEN 'Pirulito da Chiquinha'
+	WHEN conceito = 'C' THEN 'Pirulito de Peixinho'
+	ELSE 'Bala de Banana'
+END AS lembrancinha

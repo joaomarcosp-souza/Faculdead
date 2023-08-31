@@ -1,0 +1,17 @@
+DO $$
+
+DECLARE
+	id_pedido INT;
+	
+BEGIN
+	id_pedido := 3;
+	
+	IF (EXISTS (SELECT * FROM pedidos WHERE id = id_cliente)) THEN
+		SELECT data, valor, status FROM pedidos WHERE id = id_pedido;
+		
+	ELSE
+		raise notice 'O pedido % não foi encontrado', id_pedido;
+	
+	END IF;
+	
+END $$
