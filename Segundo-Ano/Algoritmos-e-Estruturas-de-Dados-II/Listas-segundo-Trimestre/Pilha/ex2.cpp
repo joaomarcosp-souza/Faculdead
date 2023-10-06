@@ -37,7 +37,6 @@ void push(Pilha *p, int valor)
         novo->proximo = p->topo;
         p->topo = novo;
 
-        // Atualizar o menor e o maior valor
         if (valor < p->menor)
         {
             p->menor = valor;
@@ -58,10 +57,8 @@ int pop(Pilha *p)
         retorno = p->topo->valor;
         p->topo = aux->proximo;
 
-        // Verificar se o valor removido é igual ao menor ou ao maior
         if (retorno == p->menor)
         {
-            // Se for igual ao menor, atualize o menor valor
             p->menor = INT_MAX;
             No *temp = p->topo;
             while (temp)
@@ -76,7 +73,6 @@ int pop(Pilha *p)
 
         if (retorno == p->maior)
         {
-            // Se for igual ao maior, atualize o maior valor
             p->maior = INT_MIN;
             No *temp = p->topo;
             while (temp)
@@ -154,41 +150,46 @@ int main()
         printf("Informe a opcao: ");
         scanf("%d", &opcao);
 
-        switch (opcao)
+        if (opcao == 1)
         {
-        case 1:
             printf("Digite o valor a ser inserido na pilha: ");
             scanf("%d", &valor);
             push(&pilha, valor);
-            break;
-        case 2:
+        }
+        else if (opcao == 2)
+        {
             valor = pop(&pilha);
             if (valor != -1)
             {
-                printf("O valor removido %d foi removido da pilha.\n", valor);
+                printf("O valor %d foi removido da pilha.\n", valor);
             }
-            break;
-        case 3:
+        }
+        else if (opcao == 3)
+        {
             valor = getMin(&pilha);
             if (valor != -1)
             {
-                printf("O menor valor na pilha: %d\n", valor);
+                printf("Menor valor na pilha: %d\n", valor);
             }
-            break;
-        case 4:
+        }
+        else if (opcao == 4)
+        {
             valor = getMax(&pilha);
             if (valor != -1)
             {
-                printf("O maior valor na pilha: %d\n", valor);
+                printf("Menor valor na pilha: %d\n", valor);
             }
-            break;
-        case 5:
+        }
+        else if (opcao == 5)
+        {
             imprimir(&pilha);
-            break;
-        case 6:
+        }
+        else if (opcao == 6)
+        {
             printf("Encerrando o programa...\n");
-            break;
-        default:
+        }
+        else
+        {
             printf("Opcao Invalida.\n");
         }
 
