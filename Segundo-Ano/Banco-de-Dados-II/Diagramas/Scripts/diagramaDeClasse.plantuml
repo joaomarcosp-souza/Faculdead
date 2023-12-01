@@ -1,0 +1,184 @@
+@startuml diagramaClasse
+
+left to right direction
+
+class Veiculo {
+  - id: int
+  - placa: string
+  - modelo: string
+  - status: string
+  - dataFabricacao: Date
+  - localizacao: string
+  - quilometragem: double
+  + historicoManutencao(): void
+  + rastrearLocalizacao(): void
+  + rastrearStatus(): void
+  + listarVeiculosPorStatus(status: string): List<Veiculo>
+  + calcularValorDepreciacao(): double
+  + listarManutencao(): List<string>
+}
+
+class Carro extends Veiculo{
+  - tipoCarro: string
+  - numeroPortas: int
+  - numeroLugares: int
+  - tipoMotor: string
+  - transmissao: string
+  - capacidadeTanqueCombustivel: double
+  - quilometragemMaxima: double
+  - velocidadeMaxima: double
+}
+
+class Caminhao extends Veiculo{
+  - capacidadeCarga: double
+  - numeroEixos: int
+  - tipoCarroceria: string
+  - pesoBrutoTotal: double
+  - comprimento: double
+  - largura: double
+  - altura: double
+}
+
+class Onibus extends Veiculo{
+  - capacidadePassageiros: int
+  - tipoCarroceria: string
+  - alturaDoPiso: double
+  - larguraDaPorta: double
+}
+
+class Moto extends Veiculo{
+  - tipoMotor: string
+  - cilindrada: double
+  - transmissao: string
+  - capacidadeTanqueCombustivel: double
+  - quilometragemMaxima: double
+  - velocidadeMaxima: double
+}
+
+class Reserva {
+  - id: int
+  - horario: int
+  - dataSaida: Date
+  - dataVolta: Date
+  + motivoDaReserva: string
+  - pessoa: Pessoa
+  - veiculo: Veiculo
+  + cancelarReserva(data: Date, veiculo: Veiculo, pessoa: Pessoa, status: Boolean): void
+  + agendarReserva(data: Date, veiculo: Veiculo, pessoa: Pessoa): void
+  + listarReservas(data: Date, veiculo: Veiculo): void
+}
+
+class Abastecimento {
+  - id: int
+  - consumo: double
+  - despesas: double
+  - dataDoAbastecimento: Date
+  - veiculo: Veiculo
+  + calcularConsumoMedio(): double
+  + registrarAbastecimento(veiculo: Veiculo, consumo: double, despesas: double): void
+  + listarAbastecimentosDoVeiculo(veiculo: Veiculo): List<Abastecimento>
+}
+
+class Notificacao {
+  - id: int
+  - tipo: string
+  - mensagem: string
+  + enviarNotificacao(tipo: string, mensagem: string, destinatario: Pessoa): void
+}
+
+class Pessoa {
+  - id: int
+  - nome: string
+  - idade: int
+  - endereco: string
+  - email: string
+  - senha: string
+  - cargo: string
+  - sexo: string
+  - dataNascimento: Date
+  + telefones: List<Telefone>
+  + incluir(): void
+  + alterar(): void
+  + excluir(): void
+  + inativar(): void
+}
+
+note "Para simplificar o \ndiagrama os 4 métodos (incluir, alterar, excluir, listar) \nforam inseridos apenas nesta classe, \nmas estão presentes nas demais caso necessário." as metodosComentario
+
+
+class Telefone {
+  - numero : string
+  - modelo : string
+  - operadora : string
+}
+
+class Administrador extends Pessoa{
+  - atribuicoes: List<string>
+  + criarPerfil(nome: string, nivelAcesso: int): void
+  + validarReserva(reserva: Reserva): void
+  + manterUsuarios(): void
+  + gerarRelatorioDeUsuarios(): void
+}
+
+class Motorista extends Pessoa{
+  - id: int
+  - cnh: string
+  - validadeCNH: Date
+  - statusViagem: string
+  - nivelAcesso: int
+  + disponibilidadeVeiculo(veiculo: Veiculo, status: Boolean): void
+  + gerenciarReservas(): void
+  + alterarQuilometragem(): void
+  + alterarStatusViagem(status: string): void
+  + verificarValidadeCNH(): void
+  + listarVeiculos(): List<Veiculo>
+  + agendarManutencao(veiculo: Veiculo, descricao: string, dataAgendamento: Date): void
+}
+
+class GerenteDeFrota extends Pessoa{
+  - nivelAcesso: int
+  + adicionarVeiculo(veiculo: Veiculo): void
+  + removerVeiculo(veiculo: Veiculo): void
+  + gerarRelatoriosViagem(): void
+  + gerarRelatorioDeConsumo(): void
+  + gerarRelatorioDeManutencao(): void
+  + gerarRelatorioManutencao(veiculo: Veiculo): void
+  + historicoManutencao(veiculo: Veiculo): List<string>
+  + disponibilidadeVeiculo(veiculo: Veiculo, status: Boolean): void
+}
+
+class GerenteDeFinancas extends Pessoa{
+  - nivelAcesso: int
+  + gerarRelatorioDeDespesas(): void
+}
+
+class FuncionarioDeMecanica extends Pessoa{
+  - nivelAcesso: int
+  + registrarManutencao(veiculo: Veiculo, data: Date): void
+  + validarManutencao(validar: Boolean): void
+  + historicoManutencao(veiculo: Veiculo): List<string>
+  + disponibilidadeVeiculo(veiculo: Veiculo, status: Boolean): void
+}
+
+Pessoa "1" o-- "0..*" Telefone
+Pessoa "1..*" --|> "0..*" Reserva: "realiza Reserva"
+
+Administrador "1" <|-- "1" Reserva : "Avalia e autoriza"
+Administrador "1" <|-- "0..*" Notificacao
+
+GerenteDeFrota -- Veiculo : "Gerencia"
+GerenteDeFrota "1"  <|-- "0..*" Notificacao
+GerenteDeFinancas -- Veiculo : "Gerencia"
+
+Motorista "1" --|> "1..*" Reserva : "Faz e Altera"
+Motorista "1" -- "0..*" Abastecimento: "Realiza e registra"
+Motorista "1" <|-- "0..*" Notificacao
+Motorista "1" o-- "1" Veiculo
+
+FuncionarioDeMecanica "1..*" --|> "0..*" Veiculo : "Mantém"
+Reserva --|> Notificacao : "Envia Notificação"
+Reserva --o Veiculo: "Reservado"
+Veiculo <|-- Abastecimento : "realiza Abastecimento"
+
+Pessoa .. metodosComentario
+@enduml

@@ -1,0 +1,390 @@
+CREATE TABLE Pessoa (
+    id_pessoa SERIAL NOT NULL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    idade INT NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    sexo VARCHAR(10) NOT NULL,
+    dataNascimento DATE NOT NULL
+);
+
+CREATE TABLE Administrador (
+    id_administrador SERIAL NOT NULL PRIMARY KEY,
+    atribuicoes VARCHAR(150) NOT NULL,
+    nivelAcesso INT NOT NULL,
+    id_pessoa INT NOT NULL,
+    CONSTRAINT FK_Pessoa_Administrador FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE Motorista (
+    id_motorista SERIAL NOT NULL PRIMARY KEY,
+    cnh VARCHAR(20) NOT NULL,
+    validadeCNH DATE NOT NULL,
+    statusViagem VARCHAR(50) NOT NULL,
+    nivelAcesso INT NOT NULL,
+    id_pessoa INT NOT NULL,
+    CONSTRAINT FK_Pessoa_Motorista FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE GerenteDeFrota (
+    id_gerenteDeFrota SERIAL NOT NULL PRIMARY KEY,
+    nivelAcesso INT NOT NULL,
+    id_pessoa INT NOT NULL,
+    CONSTRAINT FK_Pessoa_GerenteDeFrota FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE GerenteFinancas (
+    id_gerenteFinancas SERIAL NOT NULL PRIMARY KEY,
+    nivelAcesso INT NOT NULL,
+    id_pessoa INT NOT NULL,
+    CONSTRAINT FK_Pessoa_GerenteFinancas FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE FuncionarioMecanica (
+    id_funcionarioMecanica SERIAL NOT NULL PRIMARY KEY,
+    nivelAcesso INT NOT NULL,
+    id_pessoa INT NOT NULL,
+    CONSTRAINT FK_Pessoa_FuncionarioMecanica FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE Telefone (
+    id_telefone SERIAL NOT NULL PRIMARY KEY,
+    numero VARCHAR(20) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    operadora VARCHAR(50) NOT NULL,
+    id_pessoa INT NOT NULL,
+    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+CREATE TABLE Veiculo (
+    id_veiculo SERIAL NOT NULL PRIMARY KEY,
+    placa VARCHAR(10) NOT NULL,
+    modelo VARCHAR(255) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    dataFabricacao DATE NOT NULL,
+    localizacao VARCHAR(255) NOT NULL,
+    quilometragem DECIMAL(10, 2) NOT NULL,
+    disponibilidade BOOL NOT NULL,
+    tipo_veiculo VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Carro (
+    id_carro SERIAL NOT NULL PRIMARY KEY,
+    tipoCarro VARCHAR(20) NOT NULL,
+    numeroPortas INT NOT NULL,
+    numeroLugares INT NOT NULL,
+    tipoMotor VARCHAR(20) NOT NULL,
+    transmissao VARCHAR(20) NOT NULL,
+    capacidadeTanqueCombustivel INT NOT NULL,
+    quilometragemMaxima DECIMAL(10, 2) NOT NULL,
+    velocidadeMaxima INT NOT NULL,
+	id_veiculo INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo)
+);
+
+CREATE TABLE Caminhao (
+    id_caminhao SERIAL NOT NULL PRIMARY KEY,
+    capacidadeCarga DECIMAL(10, 2) NOT NULL,
+    numeroEixos INT NOT NULL,
+    tipoCarroceria VARCHAR(20) NOT NULL,
+    pesoBrutoTotal DECIMAL(10, 2) NOT NULL,
+    comprimento DECIMAL(10, 2) NOT NULL,
+    largura DECIMAL(10, 2) NOT NULL,
+    altura DECIMAL(10, 2) NOT NULL,
+	id_veiculo INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo)
+);
+
+CREATE TABLE Onibus (
+    id_onibus SERIAL NOT NULL PRIMARY KEY,
+    capacidadePassageiros INT NOT NULL,
+    tipoCarroceria VARCHAR(20) NOT NULL,
+    alturaDoPiso DECIMAL(10, 2) NOT NULL,
+    larguraDaPorta DECIMAL(10, 2) NOT NULL,
+	id_veiculo INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo)
+);
+
+CREATE TABLE Moto (
+    id_moto SERIAL NOT NULL PRIMARY KEY,
+    tipoMotor VARCHAR(20) NOT NULL,
+    cilindrada INT NOT NULL,
+    transmissao VARCHAR(20) NOT NULL,
+    capacidadeTanqueCombustivel INT NOT NULL,
+    quilometragemMaxima DECIMAL(10, 2) NOT NULL,
+    velocidadeMaxima INT NOT NULL,
+	id_veiculo INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo)
+);
+
+CREATE TABLE Reserva (
+    id_reserva SERIAL NOT NULL PRIMARY KEY,
+    horario TIME NOT NULL,
+    dataSaida DATE NOT NULL,
+    dataVolta DATE NOT NULL,
+    motivoDaReserva VARCHAR(255),
+    id_administrador INT NOT NULL,
+    id_motorista INT NOT NULL,
+    id_veiculo INT NOT NULL,
+    FOREIGN KEY (id_administrador) REFERENCES Administrador(id_administrador),
+    FOREIGN KEY (id_motorista) REFERENCES Motorista(id_motorista),
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo)
+);
+
+CREATE TABLE Manutencao (
+    id_manutencao SERIAL NOT NULL PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    dataManutencao DATE NOT NULL,
+    custo DECIMAL(10, 2) NOT NULL,
+    id_veiculo INT NOT NULL,
+    id_funcionarioMecanica INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo),
+    FOREIGN KEY (id_funcionarioMecanica) REFERENCES FuncionarioMecanica(id_funcionarioMecanica)
+);
+
+CREATE TABLE Notificacao (
+    id_notificacao SERIAL NOT NULL PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    mensagem VARCHAR(300) NOT NULL,
+	id_pessoa INT NOT NULL,
+    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
+);
+
+
+CREATE TABLE Abastecimento (
+    id_abastecimento SERIAL NOT NULL PRIMARY KEY,
+    consumo DECIMAL(10, 2) NOT NULL,
+    despesas DECIMAL(10, 2) NOT NULL,
+    dataDoAbastecimento DATE NOT NULL,
+    id_veiculo INT NOT NULL,
+    id_motorista INT NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo),
+    FOREIGN KEY (id_motorista) REFERENCES Motorista(id_motorista)
+);
+-- Gerenciamento(Alterar, excluir, cadastrar e listar)
+-- Cadastro de Pessoa(deletar, alterar e listar estão presentes em todas as tabelas de pessoa)
+INSERT INTO Pessoa (nome, idade, endereco, email, senha, sexo, dataNascimento)
+VALUES 	('Luke Skywalker', 25, 'Tatooine', 'luke@example.com', 'jedi123', 'Masculino', '1998-05-04'),
+		('Leia Organa', 28, 'Alderaan', 'leia@example.com', 'rebels123', 'Feminino', '1995-09-21'),
+		('Harry Potter', 21, 'Londres', 'harry@example.com', 'magic123', 'Masculino', '2002-07-31'),
+		('Hermione Granger', 22, 'Londres', 'hermione@example.com', 'granger123', 'Feminino', '2001-09-19'),
+		('Tony Stark', 40, 'Malibu', 'tony@example.com', 'ironman123', 'Masculino', '1983-10-14'),
+		('Bruce Wayne', 35, 'Gotham City', 'bruce@example.com', 'batman123', 'Masculino', '1988-11-27'),
+		('Diana Prince', 29, 'Themyscira', 'diana@example.com', 'amazon123', 'Feminino', '1994-03-17'),
+		('Peter Parker', 23, 'Nova York', 'peter@example.com', 'spiderman123', 'Masculino', '2000-08-10'),
+		('Clark Kent', 30, 'Metropolis', 'clark@example.com', 'superman123', 'Masculino', '1993-06-12'),
+		('Natasha Romanoff', 32, 'Moscou', 'natasha@example.com', 'blackwidow123', 'Feminino', '1991-07-25'),
+		('Arthur Dent', 30, 'Cottington', 'arthur@example.com', 'hitchhiker123', 'Masculino', '1993-12-25'),
+    	('Daenerys Targaryen', 28, 'Dragonstone', 'daenerys@example.com', 'motherofdragons123', 'Feminino', '1995-08-17'),
+    	('Bilbo Baggins', 111, 'Condado', 'bilbo@example.com', 'hobbit123', 'Masculino', '1912-09-22'),
+		('Frodo Baggins', 33, 'Condado', 'frodo@example.com', 'ringbearer123', 'Masculino', '1990-03-22'),
+    	('Hermione Granger', 27, 'Londres', 'hermione@example.com', 'wizard123', 'Feminino', '1996-09-19');
+
+-- Cadastro de Pessoa
+INSERT INTO Administrador (atribuicoes, nivelAcesso, id_pessoa)
+VALUES 	('Gerenciamento de pessoal', 1, 1),
+		('Controle de finanças', 2, 5),
+		('Segurança de dados', 1, 2);
+		
+-- Cadastro de Pessoa
+INSERT INTO Motorista (cnh, validadeCNH, statusViagem, nivelAcesso, id_pessoa)
+VALUES  ('1234567890', '2025-08-15', 'Disponível', 1, 6),
+		('9876543210', '2024-12-30', 'Em rota', 2, 7),
+		('5432167890', '2026-03-20', 'Em manutenção', 1, 9);
+
+-- Cadastro de Pessoa
+INSERT INTO GerenteDeFrota (nivelAcesso, id_pessoa)
+VALUES 	(2, 15),
+		(2, 12),
+		(2, 13);
+
+-- Cadastro de Pessoa
+INSERT INTO GerenteFinancas (nivelAcesso, id_pessoa)
+VALUES 	(2, 4),
+    	(2, 8),
+    	(2, 11);
+		
+-- Cadastro de Pessoa
+INSERT INTO FuncionarioMecanica (nivelAcesso, id_pessoa)
+VALUES 	(1, 3),
+		(1, 10),
+		(1, 14);
+		
+-- Deletar Pessoa
+DELETE FROM Pessoa
+WHERE id = 1;
+
+-- Altera Pessoa
+UPDATE Pessoa
+SET nome = 'Luke Skywalker',
+idade = 26,
+endereco = 'Yavin IV',
+email = 'luke@rebelalliance.com',
+senha = 'newjedipassword123',
+sexo = 'Masculino',
+dataNascimento = '1997-06-03'
+WHERE id = 2;
+
+-- Lista todas os usuarios
+SELECT * FROM Pessoa;
+		
+-- Cadastro
+INSERT INTO Telefone (numero, modelo, operadora, id_pessoa)
+VALUES 	('555-1234', 'iPhone X', 'AT&T', 1),
+		('555-5678', 'Samsung Galaxy S10', 'Verizon', 2),
+		('555-9876', 'Google Pixel 3', 'T-Mobile', 3),
+		('555-4321', 'OnePlus 7T', 'Sprint', 4),
+		('555-8765', 'Motorola Moto G7', 'AT&T', 5),
+		('555-1234', 'iPhone 13', 'AT&T', 6),
+		('555-5678', 'Samsung Galaxy S21', 'Verizon', 7),
+		('555-9876', 'Google Pixel 6', 'T-Mobile', 8),
+		('555-5432', 'OnePlus 9 Pro', 'Sprint', 9),
+		('555-1111', 'iPhone 12', 'AT&T', 10),
+		('555-2222', 'Samsung Galaxy S20', 'Verizon', 11),
+		('555-3333', 'Google Pixel 5', 'T-Mobile', 12),
+		('555-4444', 'OnePlus 8 Pro', 'Sprint', 13),
+		('555-7777', 'iPhone 11', 'AT&T', 14),
+		('555-8888', 'Samsung Galaxy S10', 'Verizon', 15);
+
+-- Cadastro de Veiculo (Alterar, listar e deletar para cada um dos inserts)
+INSERT INTO Veiculo (placa, modelo, status, dataFabricacao, localizacao, quilometragem, disponibilidade, tipo_veiculo) 
+VALUES 	('ABC123', 'Carro A', 'Disponível', '2020-01-15', 'Local A', 10000.00, true, 'Carro'),
+		('XYZ789', 'Carro B', 'Manutenção', '2019-07-20', 'Local B', 8500.50, false, 'Carro'),
+		('DEF456', 'Carro C', 'Disponível', '2018-03-10', 'Local C', 15000.75, true, 'Carro'),
+		('GHI789', 'Caminhão A', 'Manutenção', '2020-05-05', 'Local D', 20000.25, false, 'Caminhão'),
+		('JKL012', 'Caminhão B', 'Disponível', '2019-11-30', 'Local E', 25000.50, true, 'Caminhão'),
+		('MNO345', 'Caminhão C', 'Manutenção', '2021-02-18', 'Local F', 18000.75, false, 'Caminhão'),
+		('PQR678', 'Ônibus A', 'Disponível', '2020-08-25', 'Local G', 7500.00, true, 'Ônibus'),
+		('STU901', 'Ônibus B', 'Manutenção', '2019-12-05', 'Local H', 9800.25, false, 'Ônibus'),
+		('VWX234', 'Ônibus C', 'Disponível', '2021-06-12', 'Local I', 12500.50, true, 'Ônibus'),
+		('YZA567', 'Moto A', 'Manutenção', '2022-03-22', 'Local J', 7200.75, true, 'Moto'),
+		('PTG485', 'Moto B', 'Manutenção', '2022-03-22', 'Local 1', 7200.75, false, 'Moto'),
+		('CPC758', 'Moto C', 'Manutenção', '2022-03-22', 'Local 2', 7200.75, true, 'Moto');
+
+-- Cadastro de um tipo especifico de Veiculo
+INSERT INTO Carro (tipoCarro, numeroPortas, numeroLugares, tipoMotor, transmissao, capacidadeTanqueCombustivel, quilometragemMaxima, velocidadeMaxima, id_veiculo) 
+VALUES	('Sedan', 4, 5, 'Gasolina', 'Automática', 60, 800.00, 180, 1),
+		('SUV', 4, 7, 'Diesel', 'Automática', 70, 750.50, 170, 2),
+		('jeep', 2, 2, 'Diesel', 'Manual', 200, 600.00, 100, 3);
+		
+-- Cadastro de um tipo especifico de Veiculo
+INSERT INTO Caminhao (capacidadeCarga, numeroEixos, tipoCarroceria, pesoBrutoTotal, comprimento, largura, altura, id_veiculo) 
+VALUES	(15000.00, 2, 'Baú', 30000.00, 12.5, 2.6, 3.8, 4),
+		(20000.00, 3, 'Plataforma', 35000.00, 14.0, 3.0, 4.0, 5),
+		(25000.00, 4, 'Tanque', 40000.00, 16.0, 3.5, 4.2, 6);
+
+-- Cadastro de um tipo especifico de Veiculo
+INSERT INTO Onibus (capacidadePassageiros, tipoCarroceria, alturaDoPiso, larguraDaPorta, id_veiculo) 
+VALUES	(50, 'Convencional', 1.2, 0.8, 7),
+		(75, 'Double Decker', 1.5, 1.0, 8),
+		(30, 'Mini Ônibus', 1.0, 0.7, 9);
+		
+-- Cadastro de um tipo especifico de Veiculo
+INSERT INTO Moto (tipoMotor, cilindrada, transmissao, capacidadeTanqueCombustivel, quilometragemMaxima, velocidadeMaxima, id_veiculo) 
+VALUES	('Gasolina', 250, 'Manual', 15, 250.00, 120, 10),
+		('Gasolina', 300, 'Manual', 18, 280.50, 130, 11),
+		('Elétrica', 150, 'Automática', 12, 220.75, 110, 12);
+		
+-- Editar um Veiculo
+UPDATE Veiculo
+SET placa = 'XYZ789',
+    modelo = 'Carro B',
+    status = 'Manutenção',
+    dataFabricacao = '2019-07-20',
+    localizacao = 'Local B',
+    quilometragem = 8500.50,
+    disponibilidade = false,
+    tipo_veiculo = 'Caminhão'
+WHERE id_veiculo = 1;
+
+-- Remover um veiculo
+DELETE FROM Veiculo
+WHERE id_veiculo = 2;
+
+-- Lista todos os Veiculos Cadastrados no sistema
+SELECT * FROM veiculos;
+
+-- MUDAR STATUS DO VEICULO CASO ELE SEJA RESERVADO PARA UMA VIAJEM
+CREATE OR REPLACE FUNCTION atualizaDisponibilidade()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+        UPDATE Veiculo
+        SET disponibilidade = FALSE
+        WHERE id_veiculo = NEW.id_veiculo;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE Veiculo
+        SET disponibilidade = TRUE
+        WHERE id_veiculo = OLD.id_veiculo;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER atualizaDisponibilidadeTrigger
+AFTER INSERT OR UPDATE OR DELETE ON Reserva
+FOR EACH ROW
+EXECUTE FUNCTION atualizaDisponibilidade();
+
+-- VALIDAR DATA DA RESERVA
+CREATE OR REPLACE FUNCTION validaReserva()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.dataSaida < NOW() THEN
+        RAISE EXCEPTION 'Não é possível reservar uma data anterior à atual';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER validaReservaTrigger
+BEFORE INSERT ON Reserva
+FOR EACH ROW
+EXECUTE FUNCTION validaReserva();
+
+-- Cadastro de uma Nova Manutenção
+INSERT INTO Manutencao (descricao, dataManutencao, custo, id_veiculo, id_funcionarioMecanica)
+VALUES 	('Troca de óleo', '2023-10-25', 100.00, 1, 2),
+		('Reparo do motor', '2023-10-20', 300.00, 2, 3);
+		
+-- Deleta uma manutenção
+DELETE FROM Manutencao
+WHERE id = 1;
+		
+-- Alerta de uma nova notificação
+INSERT INTO Notificacao (tipo, mensagem, id_pessoa)
+VALUES 	('Aviso', 'Seu veículo precisa de manutenção', 1),
+		('Alerta', 'Renove sua carteira de motorista', 2);
+
+-- registro de um novo abastecimento realizado no veiculo
+INSERT INTO Abastecimento (consumo, despesas, dataDoAbastecimento, id_veiculo, id_motorista)
+VALUES 	(10.5, 50.00, '2023-10-15', 1, 1),
+		(8.2, 40.00, '2023-10-22', 2, 2);
+
+-- Altera Abastecimento
+UPDATE Abastecimento
+SET consumo = 12.0,
+despesas = 60.00
+WHERE id = 2;
+	
+-- Cadastro de uma Reserva
+INSERT INTO Reserva (horario, dataSaida, dataVolta, motivoDaReserva, id_administrador, id_motorista, id_veiculo)
+VALUES	('08:00', '2022-11-01', '2023-11-03', 'Viagem de negócios', 1, 2, 3),
+		('14:00', '2022-11-05', '2023-11-07', 'Férias', 1, 1, 5),
+    	('10:00', '2022-11-10', '2023-11-12', 'Reunião de trabalho', 2, 3, 6);
+		
+-- Deleta uma Reserva
+DELETE FROM Reserva
+WHERE id = 1;
+
+-- Altera uma Reserva
+UPDATE Reserva
+SET horario = '10:00',
+dataSaida = '2023-11-08',
+dataVolta = '2023-11-10',
+motivoDaReserva = 'Viagem pessoal'
+WHERE id = 3;
+
+-- Lista reservas realizadas
+SELECT * FROM Reserva;

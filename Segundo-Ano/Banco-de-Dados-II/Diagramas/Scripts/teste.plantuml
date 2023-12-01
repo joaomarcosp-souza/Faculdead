@@ -1,0 +1,191 @@
+@startuml DER
+
+left to right direction
+
+' Entidades
+ENTITY "Pessoa" {
+    + id_pessoa: int <<PK, generated>>
+    --
+    nome: string
+    idade: int
+    endereco: string
+    email: string
+    senha: string
+    cargo: string
+    sexo: string
+    dataNascimento: Date
+}
+
+ENTITY "Telefone" {
+    + id_telefone: int <<PK, generated>>
+    --
+    numero: string
+    modelo: string
+    operadora: string
+    id_pessoa: int <<FK>>
+}
+
+ENTITY "Administrador" {
+    + id_administrador: int <<PK, generated>>
+    --
+    atribuicoes: List<string>
+    nivelAcesso: int
+}
+
+ENTITY "Motorista" {
+    + id_motorista: int <<PK, generated>>
+    --
+    cnh: string
+    validadeCNH: Date
+    statusViagem: string
+    nivelAcesso: int
+}
+
+ENTITY "GerenteDeFrota" {
+    + id_gerenteFrota: int <<PK, generated>>
+    --
+    nivelAcesso: int
+}
+
+ENTITY "GerenteDeFinancas" {
+    + id_gerenteFinancas: int <<PK, generated>>
+    --
+    nivelAcesso: int
+}
+
+ENTITY "FuncionarioDeMecanica" {
+    + id_funcionarioMecanica: int <<PK, generated>>
+    --
+    nivelAcesso: int
+}
+
+ENTITY "Veiculo" {
+    + id_veiculo: int <<PK, generated>>
+    --
+    placa: string
+    modelo: string
+    status: string
+    dataFabricacao: Date
+    localizacao: string
+    quilometragem: double
+}
+
+ENTITY "Carro" {
+    + id_carro: int <<PK, generated>>
+    --
+    tipoCarro: string
+    numeroPortas: int
+    numeroLugares: int
+    tipoMotor: string
+    transmissao: string
+    capacidadeTanqueCombustivel: double
+    quilometragemMaxima: double
+    velocidadeMaxima: double
+}
+
+ENTITY "Caminhao" {
+    + id_caminhao: int <<PK, generated>>
+    --
+    capacidadeCarga: double
+    numeroEixos: int
+    tipoCarroceria: string
+    pesoBrutoTotal: double
+    comprimento: double
+    largura: double
+    altura: double
+}
+
+ENTITY "Onibus" {
+    + id_onibus: int <<PK, generated>>
+    --
+    capacidadePassageiros: int
+    tipoCarroceria: string
+    alturaDoPiso: double
+    larguraDaPorta: double
+}
+
+ENTITY "Moto" {
+    + id_moto: int <<PK, generated>>
+    --
+    tipoMotor: string
+    cilindrada: double
+    transmissao: string
+    capacidadeTanqueCombustivel: double
+    quilometragemMaxima: double
+    velocidadeMaxima: double
+}
+
+ENTITY "Reserva" {
+    + id_reserva: int <<PK, generated>>
+    --
+    horario: int
+    dataSaida: Date
+    dataVolta: Date
+    motivoDaReserva: string
+    id_administrador: int <<FK>>
+    id_motorista: int <<FK>>
+    id_veiculo: int <<FK>>
+}
+
+ENTITY "Abastecimento" {
+    + id_abastecimento: int <<PK, generated>>
+    --
+    consumo: double
+    despesas: double
+    dataDoAbastecimento: Date
+    id_veiculo: int <<FK>>
+    id_motorista: int <<FK>>
+}
+
+ENTITY "Manutencao" {
+    + id_manutencao: int <<PK, generated>>
+    --
+    descricao: string
+    dataManutencao: Date
+    custo: double
+    id_veiculo: int <<FK>>
+    id_funcionarioMecanica: int <<FK>>
+}
+
+ENTITY "Notificacao" {
+    + id_notificacao: int <<PK, generated>>
+    --
+    tipo: string
+    mensagem: string
+}
+
+' Relacionamentos
+Pessoa ||..o{ Telefone
+Pessoa ||--|| Administrador
+Pessoa ||--|| GerenteDeFrota
+Pessoa ||--|| GerenteDeFinancas
+Pessoa ||--|| Motorista
+Pessoa ||--|| FuncionarioDeMecanica
+Pessoa }o..|| Notificacao
+
+Administrador ||--|| Reserva: "Avalia e autoriza"
+Administrador }o..|| Notificacao
+
+GerenteDeFrota ||..o{ Veiculo: "Gerencia"
+GerenteDeFrota }o..|| Notificacao
+GerenteDeFinancas ||..|{ Veiculo: "Gerencia"
+
+Motorista ||..|{ Reserva: "Faz e Altera"
+Motorista ||..o{ Abastecimento: "Realiza e registra"
+Motorista }o..|| Notificacao
+Motorista ||--o{ Veiculo
+
+FuncionarioDeMecanica ||..o{ Veiculo: "Mantém"
+FuncionarioDeMecanica }o..o{ Manutencao: "Realiza manutenção"
+Manutencao }o..|| Veiculo: "Relacionado a"
+
+Reserva ||--|| Veiculo: "Reservado"
+Veiculo ||--|| Carro
+Veiculo ||--|| Caminhao
+Veiculo ||--|| Moto
+Veiculo ||--|| Onibus
+Veiculo ||--o{ Reserva
+Veiculo ||..o{ Abastecimento: "Realiza Abastecimento"
+Veiculo }o--|| Motorista: "Atribuído a"
+
+@enduml
